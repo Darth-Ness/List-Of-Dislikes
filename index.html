@@ -1,0 +1,39 @@
+<body class="center">
+    <div class="header">
+        <h1>List of Dislikes</h1>
+    </div>
+</body>
+
+<!--I would not recommend touching anything below here-->
+<style>.header {padding: 10; background: #3b4252; margin-bottom: 5%;}.center{text-align:center}body{font-family:Arial, sans-serif;margin: 0;font-weight: 900; background: #2e3440; color:#eceff4;}</style>
+<script>
+  async function getData(file) {
+    let myObject = await fetch(file);
+    let myText = await myObject.text();
+    var i = 0;
+    var arrayData = myText.split('\n')
+    while (i < arrayData.length) {
+        if(i%2 == 0) {
+            document.body.innerHTML += "<h1>" + arrayData[i] +"</h1><br>";
+        }
+        if(i%2 != 0) {
+            var u = 0;
+            var parsedData = "";
+            while (u < arrayData[i].length) {
+                if(arrayData[i][u] == ",") {
+                    document.body.innerHTML += "<h3>" + parsedData+"</h3><br>";
+                    parsedData = "";
+                }
+                else {
+                    parsedData += arrayData[i][u]
+                    console.log(parsedData)
+                }
+                u++;
+            }
+                document.body.innerHTML += "<h3>" + parsedData+"</h3><br>";
+        }
+        i++;
+    }
+}
+getData('http://localhost:8080/file')
+</script>
